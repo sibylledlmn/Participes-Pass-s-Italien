@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Révision des Verbes Italiens</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .verb {
+        font-weight: bold;
+      }
+      #answer {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Révision des Verbes Italiens</h1>
+    <div id="verb-container"></div>
+    <input
+      type="text"
+      id="user-input"
+      placeholder="Devine le participe passé"
+    />
+    <button onclick="checkAnswer()">Vérifier la réponse</button>
+    <button onclick="showRandomVerb()">Afficher un verbe aléatoire</button>
+    <div id="answer"></div>
+
+    <script>
+      const verbs = [
+        { verb: "andare (aller)", past: "andato" },
+        { verb: "avere (avoir)", past: "avuto" },
+        { verb: "essere (être)", past: "stato" },
+        { verb: "fare (faire)", past: "fatto" },
+        { verb: "dire (dire)", past: "detto" },
+        { verb: "vedere (voir)", past: "visto" },
+        { verb: "venire (venir)", past: "venuto" },
+        { verb: "prendere (prendre)", past: "preso" },
+        { verb: "dare (donner)", past: "dato" },
+        { verb: "scrivere (écrire)", past: "scritto" },
+        { verb: "leggere (lire)", past: "letto" },
+        { verb: "mangiare (manger)", past: "mangiato" },
+        { verb: "bere (boire)", past: "bevuto" },
+        { verb: "rimanere (rester)", past: "rimasto" },
+        { verb: "crescere (grandir)", past: "cresciuto" },
+        { verb: "nascere (naître)", past: "nato" },
+        { verb: "morire (mourir)", past: "morto" },
+        { verb: "mettere (mettre)", past: "messo" },
+        { verb: "rompere (casser)", past: "rotto" },
+        { verb: "aprire (ouvrir)", past: "aperto" },
+        { verb: "chiudere (fermer)", past: "chiuso" },
+        { verb: "vivere (vivre)", past: "vissuto" },
+        { verb: "correre (courir)", past: "corso" },
+        { verb: "ridere (rire)", past: "riso" },
+        { verb: "spendere (dépenser)", past: "speso" },
+        { verb: "scegliere (choisir)", past: "scelto" },
+        { verb: "trasmettere (transmettre)", past: "trasmesso" },
+        { verb: "saltare (sauter)", past: "saltato" },
+        { verb: "chiacchierare (bavarder)", past: "chiacchierato" },
+        { verb: "trovare (trouver)", past: "trovato" },
+        { verb: "comprare (acheter)", past: "comprato" },
+        { verb: "contare (compter)", past: "contato" },
+        { verb: "cercare (chercher)", past: "cercato" },
+        { verb: "ascoltare (écouter)", past: "ascoltato" },
+        { verb: "pensare (penser)", past: "pensato" },
+        { verb: "studiare (étudier)", past: "studiato" },
+        { verb: "giocare (jouer)", past: "giocato" },
+        { verb: "lavorare (travailler)", past: "lavorato" },
+        { verb: "sognare (rêver)", past: "sognato" },
+        { verb: "insegnare (enseigner)", past: "insegnato" },
+        { verb: "telefonare (téléphoner)", past: "telefonato" },
+        { verb: "purtroppo (malheureusement)", past: "purtroppo" },
+        { verb: "viaggiare (voyager)", past: "viaggiato" },
+        { verb: "pulire (nettoyer)", past: "pulito" },
+        { verb: "arrivare (arriver)", past: "arrivato" },
+        { verb: "passare (passer)", past: "passato" },
+        { verb: "abbandonare (abandonner)", past: "abbandonato" },
+        { verb: "incontrare (rencontrer)", past: "incontrato" },
+        { verb: "colpire (frapper)", past: "colpito" },
+        { verb: "richiedere (demander)", past: "richiesto" },
+        { verb: "sentire (entendre, sentir)", past: "sentito" },
+        { verb: "conoscere (connaître)", past: "conosciuto" },
+        { verb: "accettare (accepter)", past: "accettato" },
+        { verb: "mentire (mentir)", past: "mentito" },
+        { verb: "ottenere (obtenir)", past: "ottenuto" },
+        { verb: "fingere (faire semblant)", past: "finto" },
+        { verb: "amare (aimer)", past: "amato" },
+        { verb: "preparare (préparer)", past: "preparato" },
+        { verb: "scoprire (découvrir)", past: "scoperto" },
+        { verb: "ripetere (répéter)", past: "ripetuto" },
+        { verb: "considerare (considérer)", past: "considerato" },
+        { verb: "esprimere (exprimer)", past: "espresso" },
+        { verb: "tradurre (traduire)", past: "tradotto" },
+        { verb: "interrompere (interrompre)", past: "interrotto" },
+        { verb: "scomparire (disparaître)", past: "scomparso" },
+        { verb: "cambiare (changer)", past: "cambiato" },
+        { verb: "apprezzare (apprécier)", past: "apprezzato" },
+        { verb: "guardare (regarder)", past: "guardato" },
+        { verb: "chiedere (demander)", past: "chiesto" },
+        { verb: "svegliare (réveiller)", past: "svegliato" },
+        { verb: "accompagnare (accompagner)", past: "accompagnato" },
+        { verb: "emergere (émerger)", past: "emerso" },
+        { verb: "sorridere (sourire)", past: "sorriso" },
+        { verb: "sostenere (soutenir)", past: "sostenuto" },
+        { verb: "deludere (décevoir)", past: "deluso" },
+        { verb: "rifiutare (refuser)", past: "rifiutato" },
+        { verb: "riunire (réunir)", past: "riunito" },
+        { verb: "tornare (retourner)", past: "tornato" },
+        { verb: "inviare (envoyer)", past: "inviato" },
+        { verb: "annunciare (annoncer)", past: "annunciato" },
+        { verb: "pubblicare (publier)", past: "pubblicato" },
+        { verb: "aumentare (augmenter)", past: "aumentato" },
+        { verb: "diminuire (diminuer)", past: "diminuito" },
+        { verb: "decidere (décider)", past: "deciso" },
+        { verb: "rispondere (répondre)", past: "risposto" },
+      ];
+
+      let currentVerb;
+
+      function showRandomVerb() {
+        const randomIndex = Math.floor(Math.random() * verbs.length);
+        currentVerb = verbs[randomIndex];
+        document.getElementById(
+          "verb-container"
+        ).innerHTML = `<div class="verb">${currentVerb.verb}</div>`;
+        document.getElementById("user-input").value = "";
+        document.getElementById("answer").style.display = "none";
+      }
+
+      function checkAnswer() {
+        const userInput = document.getElementById("user-input").value;
+        const answerContainer = document.getElementById("answer");
+        if (userInput.toLowerCase() === currentVerb.past) {
+          answerContainer.innerHTML = "Correct !";
+        } else {
+          answerContainer.innerHTML = `Faux. La bonne réponse est : ${currentVerb.past}`;
+        }
+        answerContainer.style.display = "block";
+      }
+    </script>
+  </body>
+</html>
