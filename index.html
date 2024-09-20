@@ -10,20 +10,21 @@
             background-color: #f0f8ff;
             color: #333;
             padding: 20px;
+            margin: 0;
+            text-align: center; /* Centrer le texte */
         }
         h1 {
-            text-align: center;
             color: #2e8b57;
         }
         .verb {
             font-weight: bold;
             font-size: 1.5em;
             margin: 20px 0;
-            text-align: center;
             color: #ff6347;
         }
         input[type="text"] {
-            width: 100%;
+            width: 90%; /* Limiter la largeur pour éviter de déborder */
+            max-width: 400px; /* Largeur maximale */
             padding: 10px;
             margin: 10px 0;
             border: 2px solid #2e8b57;
@@ -36,7 +37,8 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            width: 100%;
+            width: 90%; /* Limiter la largeur pour les boutons */
+            max-width: 400px; /* Largeur maximale */
             margin: 5px 0;
         }
         button:hover {
@@ -44,20 +46,9 @@
         }
         #answer {
             display: none;
-            text-align: center;
             margin-top: 20px;
             font-size: 1.2em;
-        }
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.5em;
-            }
-            .verb {
-                font-size: 1.2em;
-            }
-            button {
-                font-size: 1em;
-            }
+            color: #2e8b57; /* Couleur pour la réponse */
         }
     </style>
   </head>
@@ -162,28 +153,27 @@
         { verb: "rispondere (répondre)", past: "risposto" },
       ];
 
-      let currentVerb;
+       let currentVerb;
 
-      function showRandomVerb() {
-        const randomIndex = Math.floor(Math.random() * verbs.length);
-        currentVerb = verbs[randomIndex];
-        document.getElementById(
-          "verb-container"
-        ).innerHTML = `<div class="verb">${currentVerb.verb}</div>`;
-        document.getElementById("user-input").value = "";
-        document.getElementById("answer").style.display = "none";
-      }
-
-      function checkAnswer() {
-        const userInput = document.getElementById("user-input").value;
-        const answerContainer = document.getElementById("answer");
-        if (userInput.toLowerCase() === currentVerb.past) {
-          answerContainer.innerHTML = "Correct !";
-        } else {
-          answerContainer.innerHTML = `Faux. La bonne réponse est : ${currentVerb.past}`;
+        function showRandomVerb() {
+            const randomIndex = Math.floor(Math.random() * verbs.length);
+            currentVerb = verbs[randomIndex];
+            document.getElementById("verb-container").innerHTML = 
+                `<div class="verb">${currentVerb.verb}</div>`;
+            document.getElementById("user-input").value = '';
+            document.getElementById("answer").style.display = 'none';
         }
-        answerContainer.style.display = "block";
-      }
+
+        function checkAnswer() {
+            const userInput = document.getElementById("user-input").value;
+            const answerContainer = document.getElementById("answer");
+            if (userInput.toLowerCase() === currentVerb.past) {
+                answerContainer.innerHTML = "Correct !";
+            } else {
+                answerContainer.innerHTML = `Faux. La bonne réponse est : ${currentVerb.past}`;
+            }
+            answerContainer.style.display = 'block';
+        }
     </script>
-  </body>
+</body>
 </html>
