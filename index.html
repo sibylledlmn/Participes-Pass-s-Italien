@@ -165,7 +165,7 @@
         }
 
         function checkAnswer() {
-            const userInput = document.getElementById("user-input").value;
+            const userInput = document.getElementById("user-input").value.trim(); ;
             const answerContainer = document.getElementById("answer");
             if (userInput.toLowerCase() === currentVerb.past) {
                 answerContainer.innerHTML = "Correct !";
